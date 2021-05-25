@@ -7,10 +7,11 @@ function loadPlaces(position) {
         version: '20300101',    // foursquare versioning, required but unuseful for this demo
     };
 
-   
+    // CORS Proxy to avoid CORS problems
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
     // Foursquare API (limit param: number of maximum places to fetch)
-    const endpoint = ` https://api.foursquare.com/v2/venues/search?intent=checkin 
+    const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin 
         &ll=${position.latitude},${position.longitude}
         &radius=${params.radius}
         &client_id=${params.clientId}
@@ -53,7 +54,8 @@ window.onload = () => {
                     
                     placeText.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-                        
+                        console.log(title);
+                        console.log(scale);
                     });
 
                     scene.appendChild(placeText);
@@ -68,4 +70,3 @@ window.onload = () => {
         }
     );
 };
-
